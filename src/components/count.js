@@ -1,24 +1,34 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-export const Contador = () => {
+import React, { useState, useEffect } from 'react';
 
-const [count, setCount] = useState(0)
-const sum=()=>setCount(count+1);
-const res=()=>setCount(count-1)
-useEffect(() => {
-  setInterval(() => {
-    setCount(count+1)
-    return()=>clearInterval(count)
-  },1000);
+const ContadorTemporizador = () => {
+  const [contador, setContador] = useState(0);
 
-})
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setContador(prevContador => prevContador + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const incrementarContador = () => {
+    setContador(prevContador => prevContador + 1);
+  };
+
+  const reducirContador = () => {
+    setContador(prevContador => prevContador - 1);
+  };
+
   return (
-    <>  
-    <nav>
-      <h3>{count}</h3>
-      <button onClick={sum}>+</button>
-      <button onClick={res}>-</button>
-    </nav>
-    </>
-  )
-}
+    <div>
+      <h1>{contador}</h1>
+      <button onClick={incrementarContador}>Incrementar</button>
+      <button onClick={reducirContador}>Reducir</button>
+    </div>
+  );
+};
+
+export default ContadorTemporizador;
+
